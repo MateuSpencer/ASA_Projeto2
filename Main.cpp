@@ -15,6 +15,7 @@ int main(){
     vector<int> size;//for union-find
     vector< pair<int, Vpair> > edges;
 
+    //read from file
     FILE *fp = fopen("test.txt","r");
     fscanf(fp,"%d", &V);
     fscanf(fp,"%d", &E);
@@ -27,15 +28,8 @@ int main(){
         fscanf(fp,"%d %d %d", &u, &v, &w);
         edges.push_back({w, {u, v}});
     }
-    
-    /*cout << endl;
-    for (int i=0; i<E; i++){
-        cout << edges[i].first << " "
-            << edges[i].second.first << " "
-            << edges[i].second.second <<endl;
-    }*/
 
-    sort(edges.begin(), edges.end(), greater<>());
+    sort(edges.begin(), edges.end());
 
     /* initialize all disconnected */
     for (i = 0; i <= V; i++) {
@@ -43,8 +37,8 @@ int main(){
         size.push_back(1);
     }
 
-    vector< pair<int, Vpair> >::iterator it;
-    for (it=edges.begin(); it!=edges.end(); it++){
+    vector< pair<int, Vpair> >::reverse_iterator it;
+    for (it=edges.rbegin(); it!=edges.rend(); it++){
         int u = it->second.first;
         int v = it->second.second;
 
@@ -81,8 +75,6 @@ int main(){
             }
         }
     }
-
-//atenção a grafos separados
 
     cout << sol << endl;
     return 0;    
