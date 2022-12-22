@@ -14,12 +14,17 @@ int main(){
     vector<int> id;//for union-find
     vector<int> size;//for union-find
     vector< pair<int, Vpair> > edges;
-    
-    cin >> V;
-    cin >> E;
 
+    FILE *fp = fopen("test.txt","r");
+    fscanf(fp,"%d", &V);
+    fscanf(fp,"%d", &E);
+    
+    //cin >> V;
+    //cin >> E;
+    
     for(i = 0; i<E; i++){
-        scanf("%d %d %d", &u, &v, &w);
+        //scanf("%d %d %d", &u, &v, &w);
+        fscanf(fp,"%d %d %d", &u, &v, &w);
         edges.push_back({w, {u, v}});
     }
     
@@ -30,26 +35,32 @@ int main(){
             << edges[i].second.second <<endl;
     }*/
 
-    sort(edges.begin(), edges.end());
+    sort(edges.begin(), edges.end(), greater<>());
 
     /* initialize all disconnected */
-    for (i = 0; i < V; i++) {
+    for (i = 0; i <= V; i++) {
         id.push_back(i);
         size.push_back(1);
     }
 
     vector< pair<int, Vpair> >::iterator it;
-    for (it=edges.end(); it!=edges.begin(); it--){
+    for (it=edges.begin(); it!=edges.end(); it++){
         int u = it->second.first;
         int v = it->second.second;
 
-        for (i = u; i != id[i]; i = id[i]);
-        for (j = v; j != id[j]; j = id[j]);
+        i = u;
+        while(i != id[i]){
+            i = id[i];
+        }
+        j = v;
+        while(j != id[j]){
+            j = id[j];
+        }
 
         if (id[u] != id[v]){
             // Update MST weight
             sol += it->first;
-            /*Perform union; pick right direction*/
+            //Perform union, pick right direction
             if (size[i] < size[j]) {
                 id[i] = j;
                 size[j] += size[i];
@@ -59,7 +70,7 @@ int main(){
                 size[i] += size[j];
                 head = i;
             }
-            /* retrace the path and compress to the top */
+            //retrace the path and compress to the top
             for (i = u; i != id[i]; i = x) {
                 x = id[i];
                 id[i] = head;
