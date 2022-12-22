@@ -12,20 +12,20 @@ typedef pair<int, int> Vpair;
 int main(){
     int i = 0, j = 0, x = 0, head = 0, V = 0, E = 0, u = 0, v = 0, w = 0, sol = 0;
     vector<int> id;//for union-find
-    vector<int> size;//for union-find
+    vector<int> size;//for union-find weighting
     vector< pair<int, Vpair> > edges;
 
     //read from file
     FILE *fp = fopen("test.txt","r");
-    fscanf(fp,"%d", &V);
-    fscanf(fp,"%d", &E);
+    if(fscanf(fp,"%d", &V) !=  1) return 1;
+    if(fscanf(fp,"%d", &E) !=  1) return 1;
     
     //cin >> V;
     //cin >> E;
     
     for(i = 0; i<E; i++){
-        //scanf("%d %d %d", &u, &v, &w);
-        fscanf(fp,"%d %d %d", &u, &v, &w);
+        //if(scanf("%d %d %d", &u, &v, &w) !=  3) return 1;
+        if(fscanf(fp,"%d %d %d", &u, &v, &w) !=  3) return 1;
         edges.push_back({w, {u, v}});
     }
 
@@ -41,15 +41,9 @@ int main(){
     for (it=edges.rbegin(); it!=edges.rend(); it++){
         int u = it->second.first;
         int v = it->second.second;
-
-        i = u;
-        while(i != id[i]){
-            i = id[i];
-        }
-        j = v;
-        while(j != id[j]){
-            j = id[j];
-        }
+        //find the head of the groups
+        for (i = u; i != id[i]; i = id[i]);
+        for (j = v; j != id[j]; j = id[j]);
 
         if (id[u] != id[v]){
             // Update MST weight
