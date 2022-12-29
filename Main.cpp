@@ -3,7 +3,7 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
-#include<bits/stdc++.h>
+#include <algorithm>
 
 using namespace std;
 
@@ -15,17 +15,11 @@ int main(){
     vector<int> size;//for union-find weighting
     vector< pair<int, Vpair> > edges;
 
-    //read from file
-    FILE *fp = fopen("test.txt","r");
-    if(fscanf(fp,"%d", &V) !=  1) return 1;
-    if(fscanf(fp,"%d", &E) !=  1) return 1;
-    
-    //cin >> V;
-    //cin >> E;
+    cin >> V;
+    cin >> E;
     
     for(i = 0; i<E; i++){
-        //if(scanf("%d %d %d", &u, &v, &w) !=  3) return 1;
-        if(fscanf(fp,"%d %d %d", &u, &v, &w) !=  3) return 1;
+        if(scanf("%d %d %d", &u, &v, &w) !=  3) return 1;
         edges.push_back({w, {u, v}});
     }
 
