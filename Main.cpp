@@ -40,7 +40,7 @@ int main(){
         for (i = u; i != id[i]; i = id[i]);
         for (j = v; j != id[j]; j = id[j]);
 
-        if (id[u] != id[v]){
+        if (i != j){
             // Update MST weight
             sol -= it->first;
             //Perform union, pick right direction
