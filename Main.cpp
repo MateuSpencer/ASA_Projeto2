@@ -20,6 +20,7 @@ int main(){
     
     for(i = 0; i<E; i++){
         if(scanf("%d %d %d", &u, &v, &w) !=  3) return 1;
+        w = -w;
         edges.push_back({w, {u, v}});
     }
 
@@ -31,8 +32,8 @@ int main(){
         size.push_back(1);
     }
 
-    vector< pair<int, Vpair> >::reverse_iterator it;
-    for (it=edges.rbegin(); it!=edges.rend(); it++){
+    vector< pair<int, Vpair> >::iterator it;
+    for (it=edges.begin(); it!=edges.end(); it++){
         int u = it->second.first;
         int v = it->second.second;
         //find the head of the groups
@@ -41,7 +42,7 @@ int main(){
 
         if (id[u] != id[v]){
             // Update MST weight
-            sol += it->first;
+            sol -= it->first;
             //Perform union, pick right direction
             if (size[i] < size[j]) {
                 id[i] = j;
